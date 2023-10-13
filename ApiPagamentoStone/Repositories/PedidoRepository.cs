@@ -7,23 +7,47 @@ namespace ApiPagamentoStone.Repositories
     public class PedidoRepository : IPedidoRepository
     {
         private readonly ICatalogContext _catalogContext;
-         public PedidoRepository(ICatalogContext catalogContext) 
+        public PedidoRepository(ICatalogContext catalogContext)
         {
             _catalogContext = catalogContext;
         }
 
-        public async Task CreatePedido(Pedido pedido)
+        public async Task CreatePedido(Pedido pedido, Status status, Cliente cliente, Itens itens)
         {
-            await _catalogContext.Pedido.InsertOneAsync(pedido);
+            try
+            {
+                var obj = new Pedido();
+                obj.Id = Guid.NewGuid().ToString();
+                obj.Cliente = cliente.Nome;
+                obj.Itens = itens.Name;
+                obj.IsPendente = true;
+                obj.IsCancelado = false;
+                obj.IsPago = false;
+                obj.IsEstornado = false;
+                obj.Valor = itens.Valor;
+
+                await _catalogContext.Pedido.InsertOneAsync(obj);
+
+
+            }
+            catch (Exception f)
+            {
+                string msg = string.Concat("Ocorreu um erro ao salvar: " + f.Message);
+                throw new ArgumentException(msg, f);
+            }
         }
 
-        public async Task<bool> DeletePedido(string id)
+        public async Task<bool> CancelarPedido(string id)
         {
+
             FilterDefinition<Pedido> filter = Builders<Pedido>.Filter.Eq(p => p.Id, id);
 
             DeleteResult deleteResult = await _catalogContext.Pedido.DeleteOneAsync(filter);
 
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
+
+
+
         }
 
         public async Task<IEnumerable<Pedido>> GetPedido()

@@ -6,8 +6,8 @@ namespace ApiPagamentoStone.Repositories
     {
         Task<IEnumerable<Pedido>> GetPedido();
         Task<Pedido> GetPedido(string id);
-        Task CreatePedido(Pedido pedido);
+        Task CreatePedido(Pedido pedido, Status status, Cliente cliente, Itens itens);
         Task<bool> UpdatePedido(Pedido pedido);
-        Task<bool> DeletePedido(string id);
+        Task<bool> CancelarPedido(string id);
     }
 }

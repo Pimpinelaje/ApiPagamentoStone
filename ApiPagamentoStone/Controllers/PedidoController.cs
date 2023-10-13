@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiPagamentoStone.Controllers
 {
     [Route("api/v1/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class PedidoController : Controller
     {
         private readonly IPedidoRepository _repository;
@@ -26,14 +26,14 @@ namespace ApiPagamentoStone.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(Pedido), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Pedido>> CreatePedido([FromBody] Pedido pedido)
+        public async Task<ActionResult<Pedido>> CreatePedido([FromBody] Pedido pedido, Status status, Cliente cliente, Itens itens)
         {
             if (pedido == null)
             
                 return BadRequest("Pedido Inválido");
             
             
-            await _repository.CreatePedido(pedido);
+            await _repository.CreatePedido(pedido, status, cliente, itens);
 
             return CreatedAtRoute("GetPedido", new { id = pedido.Id }, pedido);
             
@@ -52,9 +52,9 @@ namespace ApiPagamentoStone.Controllers
 
         [HttpDelete]
         [ProducesResponseType(typeof(Pedido), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeletePedido(string id)
+        public async Task<IActionResult> CancelarPedido(string id)
         {
-            return Ok(await (_repository.DeletePedido(id)));
+            return Ok(await (_repository.CancelarPedido(id)));
         }
     }
 }

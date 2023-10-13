@@ -10,13 +10,13 @@ namespace ApiPagamentoStone.Data
             bool existPedido = pedidoCollection.Find(p => true).Any();
             if (!existPedido)
             {
-                pedidoCollection.InsertManyAsync(MyPedido);
+                pedidoCollection.InsertManyAsync(GetMyPedido());
             }           
         }
 
-        private static IEnumerable<Pedido> MyPedido
+        private static IEnumerable<Pedido> GetMyPedido()
         {
-            get
+            return new List<Pedido>()
             {
                 new Pedido()
                 {
@@ -25,8 +25,11 @@ namespace ApiPagamentoStone.Data
                     Itens = "Carro",
                     Valor = 20000.00M,
                     ValorTotal = 20000.00M,
-                    Status = "Pendente"
-                };
+                    IsPendente = true,
+                    IsPago = false,
+                    IsEstornado = false,
+                    IsCancelado = false,
+                },
                 new Pedido()
                 {
                     Id = "602d2149e773f2a3990b47f7",
@@ -34,8 +37,11 @@ namespace ApiPagamentoStone.Data
                     Itens = "Trator",
                     Valor = 30000.00M,
                     ValorTotal = 30000.00M,
-                    Status = "Pendente"
-                };
+                    IsPendente = true,
+                    IsPago = false,
+                    IsEstornado = false,
+                    IsCancelado = false,
+                },
                 new Pedido()
                 {
                     Id = "602d2149e773f2a3990b47f9",
@@ -43,9 +49,12 @@ namespace ApiPagamentoStone.Data
                     Itens = "Moto",
                     Valor = 25000.00M,
                     ValorTotal = 25000.00M,
-                    Status = "Pendente"
-                };
-            }            
+                    IsPendente = true, 
+                    IsPago = false, 
+                    IsEstornado = false, 
+                    IsCancelado = false
+                }
+            };        
         }
     }
 }

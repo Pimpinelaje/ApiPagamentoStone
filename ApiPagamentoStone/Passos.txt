@@ -1,0 +1,11 @@
+﻿Crie uma API Rest que faça o gerenciamento de um pedido. Nela devem conter as operações e regras abaixo:
+
+Criar pedido: Deve ser possível criar um pedido contendo Itens, Status, Customer e Total.
+Pedido deve ser criado com status Pendente
+Adicionar Item ao pedido: Deve ser possível adicionar um item ao pedido alterando o valor Total.
+Pagar pedido: Deve ser a operação que altera o status do pedido para Pago.
+Só poderá ser pago um pedido pedido Pendente.
+Cancelar pedido: Deve ser a operação que altera o status do pedido para Cancelado.
+Só poderá ser cancelado um pedido pedido Pendente.
+Estornar pedido: Deve ser a operação que altera o status do pedido para Estornado.
+Só poderá ser estornado um pedido Pago.
